@@ -1,0 +1,12 @@
+{
+  "name": "MapGenJS",
+  "version": "0.0.0",
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-bower-task": "~0.3.4",
+    "grunt-cli": "^0.1.13",
+    "grunt-coffee-toaster": "^0.1.4",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-shell": "^0.7.0"
+  }
+}
