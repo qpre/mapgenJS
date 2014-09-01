@@ -1,0 +1,1 @@
+class MG.lib.geometry.Circle
