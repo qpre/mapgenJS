@@ -47,3 +47,15 @@ displayColors = {
 	TROPICAL_RAIN_FOREST: "#337755",
 	TROPICAL_SEASONAL_FOREST: "#559944"
 }
+
+elevationGradientColors = {
+	OCEAN: "#008800",
+	GRADIENT_LOW: "#008800",
+	GRADIENT_HIGH: "#ffff00"
+}
+
+moistureGradientColors = {
+	OCEAN: "#4466ff",
+	GRADIENT_LOW: "#bbaa33",
+	GRADIENT_HIGH: "#4466ff"
+}
