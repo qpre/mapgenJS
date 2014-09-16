@@ -5,7 +5,7 @@ class MG.lib.Map
     @LAKE_THRESHOLD			= 0.3
             
     islandShape             = null
-    mapRandom             	= new PMPRNG()
+    mapRandom             	= new MG.lib.math.PMPRNG()
 	needsMoreRandomness     = null
 	pointSelector 			= null
 	numPoints				= null

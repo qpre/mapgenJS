@@ -1,6 +1,6 @@
 #<< MG/lib/math/PM_PNRG
 
-class PointSelector
+class MG.lib.PointSelector
   NUM_LLOYD_RELAXATIONS = 2
 
   @needsMoreRandomness = (type) ->
@@ -17,21 +17,6 @@ class PointSelector
         points.push p
 
       points
-  
-#   // Generate points at random locations
-#   static public function generateRandom(size:int, seed:int):Function {
-#     return function(numPoints:int):Vector.<Point> {
-#       var mapRandom:PM_PRNG = new PM_PRNG();
-#       mapRandom.seed = seed;
-#       var p:Point, i:int, points:Vector.<Point> = new Vector.<Point>();
-#       for (i = 0; i < numPoints; i++) {
-#         p = new Point(mapRandom.nextDoubleRange(10, size-10),
-#                       mapRandom.nextDoubleRange(10, size-10));
-#         points.push(p);
-#       }
-#       return points;
-#     }
-#   }
 
 
 #   // Improve the random set of points with Lloyd Relaxation

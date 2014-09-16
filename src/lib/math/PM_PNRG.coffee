@@ -48,13 +48,21 @@ class MG.lib.math.PMPRNG
     ###         
     constructor: () ->
     	seed = 1
-                
+           
+    ###
+    generator:
+    new-value = (old-value * 16807) mod (2^31 - 1)
+    ###
+    gen: () ->
+        #integer version 1, for max int 2^46 - 1 or larger.
+        seed = (seed * 16807) % 2147483647
+
     ###
     provides the next pseudorandom number
     as an unsigned integer (31 bits)
     ###
     nextInt: () ->
-		@gen()
+        @gen()
 
     ### 
     provides the next pseudorandom number
@@ -79,11 +87,3 @@ class MG.lib.math.PMPRNG
     ###
     nextDoubleRange: (min, max) ->
     	min + ((max - min) * nextDouble())
-    
-    ###
-    generator:
-    new-value = (old-value * 16807) mod (2^31 - 1)
-    ###
-    gen: () ->
-        #integer version 1, for max int 2^46 - 1 or larger.
-        seed = (seed * 16807) % 2147483647

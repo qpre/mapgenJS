@@ -48,7 +48,7 @@ Implementation of the Park Miller (1988) "minimal standard" linear
 
 
 (function() {
-  var centers, corners, edges, needsMoreRandomness, numPoints, pointSelector, points;
+  var backBuffer, canvas, centers, corners, ctx, edges, frontBuffer, needsMoreRandomness, numPoints, pointSelector, points;
 
   MG.lib.math.PMPRNG = (function() {
     /*
@@ -62,55 +62,62 @@ Implementation of the Park Miller (1988) "minimal standard" linear
     }
 
     /*
+        generator:
+        new-value = (old-value * 16807) mod (2^31 - 1)
+    */
+
+
+    PMPRNG.prototype.gen = function() {
+      var seed;
+      return seed = (seed * 16807) % 2147483647;
+    };
+
+    /*
         provides the next pseudorandom number
         as an unsigned integer (31 bits)
     */
 
 
-    PMPRNG.prototype.nextInt = function() {};
+    PMPRNG.prototype.nextInt = function() {
+      return this.gen();
+    };
 
-    return PMPRNG;
-
-  })();
-
-  this.gen()({
     /* 
     provides the next pseudorandom number
     as a float between nearly 0 and nearly 1.0.
     */
 
-    nextDouble: function() {
+
+    PMPRNG.prototype.nextDouble = function() {
       return this.gen() / 2147483647;
-    },
+    };
+
     /*
         provides the next pseudorandom number
         as an unsigned integer (31 bits) betweeen
         a given range.
     */
 
-    nextIntRange: function(min, max) {
+
+    PMPRNG.prototype.nextIntRange = function(min, max) {
       min -= 0.4999;
       max += 0.4999;
       return Math.round(min + ((max - min) * nextDouble()));
-    },
+    };
+
     /*
         provides the next pseudorandom number
         as a float between a given range.
     */
 
-    nextDoubleRange: function(min, max) {
-      return min + ((max - min) * nextDouble());
-    },
-    /*
-        generator:
-        new-value = (old-value * 16807) mod (2^31 - 1)
-    */
 
-    gen: function() {
-      var seed;
-      return seed = (seed * 16807) % 2147483647;
-    }
-  });
+    PMPRNG.prototype.nextDoubleRange = function(min, max) {
+      return min + ((max - min) * nextDouble());
+    };
+
+    return PMPRNG;
+
+  })();
 
   MG.lib.Point = (function() {
 
@@ -200,8 +207,15 @@ Implementation of the Park Miller (1988) "minimal standard" linear
 
     PointSelector.generateRandom = function(size, seed) {
       return function(numPoints) {
-        var mapRandom;
-        return mapRandom = new PMPNRG();
+        var i, mapRandom, p, points, _i;
+        mapRandom = new PMPNRG();
+        mapRandom.seed = seed;
+        points = [];
+        for (i = _i = 0; 0 <= numPoints ? _i <= numPoints : _i >= numPoints; i = 0 <= numPoints ? ++_i : --_i) {
+          p = new Point(mapRandom.nextDoubleRange(10, size - 10), mapRandom.nextDoubleRange(10, size - 10));
+          points.push(p);
+        }
+        return points;
       };
     };
 
@@ -299,7 +313,7 @@ Implementation of the Park Miller (1988) "minimal standard" linear
 
     islandShape = null;
 
-    mapRandom = new PMPRNG();
+    mapRandom = new MG.lib.math.PMPRNG();
 
     return Map;
 
@@ -990,5 +1004,25 @@ Implementation of the Park Miller (1988) "minimal standard" linear
       return this.islandShape(new Point(2 * (p.x / SIZE - 0.5), 2 * (p.y / SIZE(-0.5))));
     }
   });
+
+  backBuffer = document.createDocumentFragment();
+
+  frontBuffer = document.getElementById('drawingZone');
+
+  canvas = document.createElement('canvas');
+
+  canvas.width = 800;
+
+  canvas.height = 600;
+
+  ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#000000";
+
+  ctx.fillRect(0, 0, 800, 600);
+
+  backBuffer.appendChild(canvas);
+
+  frontBuffer.appendChild(backBuffer);
 
 }).call(this);
